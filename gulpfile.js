@@ -37,9 +37,9 @@ function minJS(cb) {
     "node_modules/lightslider/dist/js/lightslider.min.js",
     "js/app.js",
   ])
-    .pipe(concat("all.min.js"))
-    .pipe(uglify())
-    .pipe(dest("js"));
+  .pipe(concat("all.min.js"))
+  .pipe(uglify())
+  .pipe(dest("js"));
   cb();
 }
 
@@ -56,8 +56,9 @@ function browserSync(cb) {
   });
 
   watch("scss/**.scss", series(compileCSS, minCSS));
-  watch(["js/*.js", "!node_modules/**"], minJS);
+  watch(["js/app.js", "!node_modules/**"], minJS);
   watch("**.html").on("change", sync.reload);
+  watch("js/all.min.js").on("change", sync.reload);
 }
 
 exports.scss = compileCSS;
